@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Planner Pro</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <h1>Travel Planner Pro</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#dashboard">Inicio</a></li>
+                <li><a href="#buscador">Destinos</a></li>
+                <li><a href="#favoritos">Favoritos</a></li>
+                <li><a href="#historial">Historial</a></li>
+            </ul>
+            <button id="btnTema">🌙</button>
+        </nav>
+        
+    </header>
+    <main>
+        <section id="registro">
+            <h2>Regístrate para comenzar a planificar tus viajes</h2>
+            <form id="formRegistro">
+                <label for="nombre">Nombre Completo:</label>
+                <input type="text" id="nombre" name="nombre" placeholder="Ej: Jose Castilla" required>
+
+                <label for="correo">Correo Electrónico:</label>
+                <input type="email" id="correo" name="correo" placeholder="josecastilla@correo.com" required>
+
+                <select id="pais" name="pais" required>
+                    <option value="">Selecciona tu país</option>
+                    <!-- JS llenará esto automáticamente -->
+                </select>
+
+                <button type="submit">Registrarse</button>
+            </form>
+            
+        </section>
+
+        <section id="dashboard">
+            <h2>Bienvenido, <span id="nombreUsuario">...</span></h2>
+        
+            <div class="dashboard-cards">
+        
+                <div class="card">
+                    <h3>Países Consultados</h3>
+                    <p id="totalPaises">0</p>
+                </div>
+        
+                <div class="card">
+                    <h3>Destinos Favoritos</h3>
+                    <p id="totalFavoritos">0</p>
+                </div>
+        
+                <div class="card">
+                    <h3>Atracciones Favoritas</h3>
+                    <p id="totalAtracciones">0</p>
+                </div>
+        
+            </div>
+        </section>
+
+        <section class="buscador" id="buscador">
+            <h2>Buscador de Destinos</h2>
+            <form id="formBuscador">
+                <input type="text" id="destino" name="destino" placeholder="Ej: París, Francia" required>
+                <button type="submit">Buscar</button>
+            </form>
+        </section>
+
+        <section class="resultados" id="resultados">
+            <h2>Resultados de Búsqueda</h2>
+            <div id="listaresultados" class="resultados">
+                <!-- JS llenará esto automáticamente -->
+            </div>
+        </section>
+
+        <section class="favoritos" id="favoritos">
+            <h2>Destinos Favoritos</h2>
+            <div id="listaFavoritos" class="favoritos">
+                <!-- JS llenará esto automáticamente -->
+            </div>
+        </section>
+
+        <section class="historial" id="historial">
+            <h2>Historial de Búsqueda</h2>
+            <div id="listaHistorial" class="historial">
+                <!-- JS llenará esto automáticamente -->
+            </div>
+        </section>
+    </main>
+    <footer>
+    <p>&copy; 2026 Travel Planner Pro. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>
