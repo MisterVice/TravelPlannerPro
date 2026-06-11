@@ -224,3 +224,116 @@ footer {
     border-top: 1px solid var(--borde);
     color: var(--texto-suave);
 }
+
+@media  (max-width: 768px) 
+{
+    
+    .navbar
+    {
+
+        flex-direction: column;
+
+    }
+
+    main
+    {
+
+        flex-direction: column;
+        text-align: center;
+
+    }
+
+
+    #registro 
+    {
+        display: flex;
+        flex-direction: column;
+        align-items: center; 
+
+    }
+
+
+    #formRegistro 
+    {
+        display: flex;
+        flex-direction: column;
+        align-items: center; 
+    }
+
+    #formRegistro button 
+    {
+
+
+    width: 100%; 
+    box-sizing: border-box;
+
+
+    }
+
+   
+
+
+    #dashboard h2 
+    {
+
+        text-align: center;
+        margin-bottom: 20px;
+
+    }
+
+    
+    .dashboard-cards 
+    {
+
+
+        display: flex;
+        flex-direction: column; 
+        align-items: center;    
+        gap: 12px;             
+        width: 100%;
+
+
+    }
+
+
+    .dashboard-cards .card
+    {
+
+        width: 80%;        
+        max-width: 350px; 
+        box-sizing: border-box;
+
+
+    }
+
+    #buscador, #resultados,  #favoritos, #historial 
+    {
+
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;   
+        width: 100%;  
+        text-align: center;   
+        
+        
+    }
+
+    #formBuscador 
+    {
+
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 90%;
+        max-width: 400px;
+        
+
+    }
+
+    
+    
+
+
+}
