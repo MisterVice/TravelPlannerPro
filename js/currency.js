@@ -1,36 +1,53 @@
 // ==================== CURRENCY.JS ====================
-// Frankfurter API – Conversión de monedas
+// Conversor de monedas con open.er-api.com y fallback a Frankfurter
 
 const Currency = {
 
     monedaActual: 'USD',
 
     async obtenerTasas(base) {
+        // Usamos open.er-api.com como primera opción porque responde bien desde el navegador.
+        try {
+            const res = await fetch(`https://open.er-api.com/v6/latest/${base}`);
+            if (res.ok) {
+                const data = await res.json();
+                if (data.result === 'success' && data.rates) {
+                    return { base: data.base_code || base, rates: data.rates };
+                }
+                throw new Error('Respuesta inesperada de open.er-api.com');
+            }
+        } catch (err) {
+            console.warn('[Currency] Error con open.er-api.com:', err.message);
+        }
+
+        // Fallback a Frankfurter si la primera API falla.
         const res = await fetch(`https://api.frankfurter.app/latest?from=${base}`);
         if (!res.ok) throw new Error('Error al obtener tasas de cambio');
-        return await res.json();
+        const data = await res.json();
+        return { base: data.base || base, rates: data.rates };
     },
 
     async renderizarConversor(monedaPais) {
         this.monedaActual = monedaPais || 'USD';
 
-        // Si la moneda del país es una de las objetivo, usamos USD como base
         const monedasObjetivo = ['COP', 'USD', 'EUR', 'GBP'];
-        const base = monedasObjetivo.includes(this.monedaActual) ? 'USD' : this.monedaActual;
+        const base = 'USD';
 
         let tasas = {};
         try {
             const data = await this.obtenerTasas(base);
             tasas = data.rates;
-            tasas[base] = 1; // La propia base vale 1
+            tasas[base] = 1;
         } catch {
             return `<div class="error-msg">No se pudieron obtener las tasas de cambio.</div>`;
         }
 
         const monedasMostrar = [...new Set([...monedasObjetivo, this.monedaActual])];
-
-        const opciones = monedasMostrar
-            .map(m => `<option value="${m}">${m}</option>`)
+        const opcionesOrigen = monedasMostrar
+            .map(m => `<option value="${m}"${m === 'USD' ? ' selected' : ''}>${m}</option>`)
+            .join('');
+        const opcionesDestino = monedasMostrar
+            .map(m => `<option value="${m}"${m === this.monedaActual ? ' selected' : ''}>${m}</option>`)
             .join('');
 
         return `
@@ -39,9 +56,9 @@ const Currency = {
             <p class="texto-suave">Moneda del país: <strong>${this.monedaActual}</strong></p>
             <div class="conversor-form">
                 <input type="number" id="montoConversion" value="100" min="0" step="any">
-                <select id="monedaOrigen">${opciones}</select>
+                <select id="monedaOrigen">${opcionesOrigen}</select>
                 <span>→</span>
-                <select id="monedaDestino">${opciones}</select>
+                <select id="monedaDestino">${opcionesDestino}</select>
             </div>
             <p id="resultadoConversion" class="resultado-conversion">—</p>
             <button id="btnConvertir">Convertir</button>
@@ -73,13 +90,12 @@ const Currency = {
 
             if (!btnConvertir) return;
 
-            // Pre-seleccionar moneda del país como destino si existe
             if (destino && monedaPais) {
                 const opt = [...destino.options].find(o => o.value === monedaPais);
                 if (opt) destino.value = monedaPais;
             }
 
-            btnConvertir.addEventListener('click', () => {
+            btnConvertir.onclick = () => {
                 const monto = parseFloat(montoInput.value);
                 const o = origen.value;
                 const d = destino.value;
@@ -93,7 +109,7 @@ const Currency = {
                 } else {
                     resultado.textContent = `${monto.toLocaleString()} ${o} = ${parseFloat(res).toLocaleString('es-CO', { maximumFractionDigits: 4 })} ${d}`;
                 }
-            });
+            };
 
         } catch {
             const resultado = document.getElementById('resultadoConversion');
