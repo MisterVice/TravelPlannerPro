@@ -5,7 +5,7 @@
 
 const Tourism = {
 
-    API_KEY: '893be3274d924b058910bed87b7d7dc5', // 👈 Reemplazar
+    API_KEY: '893be3274d924b058910bed87b7d7dc5',
 
     async obtenerAtracciones(lat, lng) {
         const categorias = 'tourism.attraction,tourism.sights,entertainment.museum';
